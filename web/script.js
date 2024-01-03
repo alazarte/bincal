@@ -125,7 +125,7 @@ function showTable(target) {
 }
 
 async function updateTables() {
-  fetch("http://127.0.0.1:8081/data", {
+  await fetch("http://127.0.0.1:8081/data", {
     method: "POST",
     mode: "cors",
     cache: "no-cache",

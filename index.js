@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const fs = require("fs");
 const port = 8081;
+const filedata = "data.json";
 
 app.use('/', express.static('web/'))
 
@@ -14,14 +15,14 @@ app.use((_, res, next) => {
 app.use(express.json());
 
 app.post('/data', (req, res) => {
-  fs.writeFile("/tmp/data.json", JSON.stringify(req.body), err => {
+  fs.writeFile(filedata, JSON.stringify(req.body), err => {
     console.error(err);
   });
   res.status(200).send("");
 });
 
 app.get('/data', (req, res) => {
-  const file = fs.readFile("/tmp/data.json", (err, data) => {
+  const file = fs.readFile(filedata, (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send("");
