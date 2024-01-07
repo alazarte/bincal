@@ -1,5 +1,6 @@
 const checkColor = "#000";
 const normalColor = "#ccc";
+const storageItemName = "tables";
 
 const months = {
   "January": 31,
@@ -48,16 +49,12 @@ async function changeColor(target) {
 }
 
 async function initTables() {
-  const res = await fetch("http://127.0.0.1:8081/data", {
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-  });
+  const data = localStorage.getItem(storageItemName);
 
-  if (res.status != 200) {
+  if (!data) {
     tables = initialTables;
   } else {
-    tables = await res.json();
+    tables = JSON.parse(data);
   }
 
   const select = document.getElementById("selectTables");
@@ -135,15 +132,7 @@ function showTable(target) {
 }
 
 async function updateTables() {
-  await fetch("http://127.0.0.1:8081/data", {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify(tables),
-  });
+  localStorage.setItem(storageItemName, JSON.stringify(tables));
 }
 
 async function deleteTable() {
